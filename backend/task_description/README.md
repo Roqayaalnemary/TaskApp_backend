@@ -21,7 +21,7 @@ Frontend Repository: [Link to Frontend Repo - Placeholder]
 Deployed Site: [Link to Deployed Site - Placeholder]
 
 ERD Diagram
-(https://file%2B.vscode-resource.vscode-cdn.net/Users/roqayaalnemary/TaskApp_backend/task_description/ERD.jpg?version%3D1745956463046)  
+![ERD DIAGRAM](./ERD.jpg )
 
 API Routing Table (Server)
 Based on Django REST Framework DefaultRouter:
