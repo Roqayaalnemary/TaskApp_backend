@@ -14,11 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
-
-# تحميل المتغيرات من ملف .env
 load_dotenv()
-
-# الحصول على قيمة SECRET_KEY من ملف .env
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,6 +32,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_ALL_ORIGINS=False
+CORS_ALLOW_HEADERS = '*'
+CORS_ALLOWED_ORIGINS=[
+    "http://localhost:5173",
+    "http://localhost:5174"
+]
+
 
 # Application definition
 
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
     # add main_app here
     'main_app',
     'rest_framework',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,7 +63,31 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -70,6 +98,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -86,16 +115,27 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  
+#         'NAME': 'task_app_db', 
+#         'USER': 'postgres', 
+#         'PASSWORD': '79007900Rr', 
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  
-        'NAME': 'task_app_db', 
-        'USER': 'postgres', 
-        'PASSWORD': '79007900Rr', 
-
+        'ENGINE': os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),  
+        'NAME': os.environ.get("SQL_DATABASE", "task_app_db"), 
+        'USER': os.environ.get("SQL_USER", "postgres"),  
+        'PASSWORD': os.environ.get("SQL_PASSWORD", "79007900Rr"), 
+        'HOST': os.environ.get("SQL_HOST", "localhost"),  
+        'PORT': os.environ.get("SQL_PORT", "5432"), 
     }
 }
-
 
 
 # Password validation
@@ -139,20 +179,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # مدة صلاحية التوكن للوصول
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # مدة صلاحية التوكن للتحديث
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'UPDATE_LAST_LOGIN': False,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,  # المفتاح السري لتوقيع التوكن
-    'AUTH_HEADER_TYPES': ('Bearer',),
-}
