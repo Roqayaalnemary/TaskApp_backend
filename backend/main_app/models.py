@@ -41,8 +41,6 @@ class Comment(models.Model):
         return self.content[:50] 
 
 
-from django.db import models
-from django.contrib.auth.models import User
 
 class Home(models.Model):
     title = models.CharField(max_length=255, default="Welcome to Task Manager")  # عنوان الصفحة الرئيسية
