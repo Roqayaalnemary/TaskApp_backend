@@ -21,7 +21,7 @@ Frontend Repository: [Link to Frontend Repo - Placeholder]
 Deployed Site: [Link to Deployed Site - Placeholder]
 
 ERD Diagram
-![ERD DIAGRAM](./ERD.jpg )
+![ERD DIAGRAM](./task_description/ERD.jpg )
 
 API Routing Table (Server)
 Based on Django REST Framework DefaultRouter:

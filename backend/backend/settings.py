@@ -37,6 +37,7 @@ CORS_ALLOW_HEADERS = '*'
 CORS_ALLOWED_ORIGINS=[
     "http://localhost:5173",
     "http://localhost:5174"
+    
 ]
 
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'main_app',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
