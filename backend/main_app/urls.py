@@ -1,6 +1,6 @@
 from django.urls import path, include
 from django.urls import path
-from .views import TaskListCreate, BulletinBoardMessageListCreate, CommentListCreate,CreateUserView,LoginView
+from .views import TaskListCreate, BulletinBoardMessageListCreate, CommentListCreate,CreateUserView,LoginView,VerifyUserView
 
 
 urlpatterns = [
@@ -9,6 +9,6 @@ urlpatterns = [
     path('comments/', CommentListCreate.as_view(), name='comment-list-create'),
     path('users/signup/', CreateUserView.as_view(), name='signup'),
     path('users/login/', LoginView.as_view(), name='login'),
-    # path('users/token/refresh/', VerifyUserView.as_view(), name='token_refresh'),
+    path('users/token/refresh/', VerifyUserView.as_view(), name='token_refresh'),
 
 ]

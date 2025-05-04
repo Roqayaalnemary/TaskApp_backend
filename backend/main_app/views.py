@@ -36,6 +36,8 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
     def create(self, request, *args, **kwargs):
+        if not request.data.get('username') or not request.data.get('password'):
+            return Response({'error': 'Username and password are required'}, status=status.HTTP_400_BAD_REQUEST)
         try:
             response = super().create(request, *args, **kwargs)
             user = User.objects.get(username=response.data['username'])
@@ -59,3 +61,13 @@ class BulletinBoardMessageListCreate(generics.ListCreateAPIView):
 class CommentListCreate(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+class VerifyUserView(APIView):
+    def get(self, request):
+        try:
+            refresh_token = request.data.get('refresh')
+            token = RefreshToken(refresh_token)
+            new_access_token = str(token.access_token)
+            return Response({"access": new_access_token}, status=status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_400_BAD_REQUEST)
