@@ -1,5 +1,5 @@
--- CREATE DATABASE task_app_db;
+CREATE DATABASE task_app_db;
 
--- CREATE USER task_app_user WITH PASSWORD '79007900Rr';
+CREATE USER task_app_user WITH PASSWORD '79007900Rr';
 
--- GRANT ALL PRIVILEGES ON DATABASE task_app_db TO task_app_user;
+GRANT ALL PRIVILEGES ON DATABASE task_app_db TO task_app_user;

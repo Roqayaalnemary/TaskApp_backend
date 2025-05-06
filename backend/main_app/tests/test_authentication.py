@@ -74,8 +74,8 @@ class AuthenticationTests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {login_response.data["access"]}')
 
         # Test token refresh
-        response = self.client.get(self.token_refresh_url)  # Changed from POST to GET
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.get(self.token_refresh_url)  
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('access', response.data)
         self.assertIn('refresh', response.data)
         self.assertIn('user', response.data)
@@ -103,3 +103,4 @@ class AuthenticationTests(APITestCase):
     def tearDown(self):
         """Clean up after each test"""
         self.client.credentials()
+

@@ -22,18 +22,28 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)  # Read-only field for the username
+    created_at = serializers.DateTimeField(read_only=True)  # Read-only field for the creation date
+    completed = serializers.BooleanField(default=False)  # Default value for completed field
+
     class Meta:
         model = Task
-        fields = ['id', 'title', 'description', 'completed', 'user']
+        fields = '__all__'
+
 
 
 class BulletinBoardMessageSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
+    created_at = serializers.DateTimeField(read_only=True)
+
     class Meta:
         model = BulletinBoardMessage
         fields = ['id', 'title', 'content', 'image', 'created_at', 'user']
+        extra_kwargs = {'user': {"read_only": True}}  # Make user read-only
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'content', 'created_at', 'user', 'message']
+
