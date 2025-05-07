@@ -43,6 +43,8 @@ class BulletinBoardMessageSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
+
     class Meta:
         model = Comment
         fields = ['id', 'content', 'created_at', 'user', 'message']

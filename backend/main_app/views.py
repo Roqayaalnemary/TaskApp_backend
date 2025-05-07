@@ -151,7 +151,7 @@ class PostDetail(APIView):
     serializer_class = BulletinBoardMessageSerializer
     lookup_field = 'id'
 
-    def put(self, request, post_id):
+    def put(self, requesmessage):
         try:
             post = BulletinBoardMessage.objects.get(id=post_id)
             serializer = self.serializer_class(post, data=request.data)
@@ -172,12 +172,20 @@ class PostDetail(APIView):
             return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # View for Comment CRUD operations
-class CommentListCreate(generics.ListCreateAPIView):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+class PostListCreateComments(APIView):
+    def get(self, request, message_id):
+        # إذا كنت تريد أن تعرض تعليقات لرسالة معينة
+        comments = Comment.objects.filter(message=message_id)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-
+    def post(self, request, message_id):
+        # إضافة تعليق جدي
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
