@@ -1,6 +1,6 @@
 Backend README - Full Stack Bulletin Board
 
-Project Description
+📝 Project Description
 
 This repository contains the backend code for the Full Stack Bulletin Board application. It provides a RESTful API built with Django and Django REST Framework to manage users, tasks, bulletin board messages, and comments. The backend uses PostgreSQL for data persistence and is designed to be containerized using Docker.
 
@@ -17,11 +17,12 @@ Server: Gunicorn
 Containerization: Docker
 
 Links
-Frontend Repository: [Link to Frontend Repo - Placeholder]
+ Frontend Repository: https://github.com/Roqayaalnemary/TaskApp_frontend
+
 Deployed Site: [Link to Deployed Site - Placeholder]
 
 ERD Diagram
-![ERD DIAGRAM](./task_description/ERD.jpg )
+![ERD DIAGRAM](./images/ERD.jpg)
 
 API Routing Table (Server)
 Based on Django REST Framework DefaultRouter:
@@ -57,6 +58,7 @@ Based on Django REST Framework DefaultRouter:
 Installation Instructions (Docker)
 
 1- Prerequisites: Docker and Docker Compose must be installed.
+
 2- Clone Repositories: Clone both the backend and frontend repositories into a common parent directory.
 
 git clone <backend-repo-url> backend
@@ -64,10 +66,17 @@ git clone <frontend-repo-url> frontend
 cd .. # Move to the parent directory 
 containing backend/ and frontend/
 
-3-Environment Variables: Create a .env file in the parent directory (where docker-compose.yml resides) with the following variables:
+Environment Variables:
+Create a .env file in the parent directory (where docker-compose.yml resides) with the following variables:
 env
+# Database Settings
+DB_NAME=bulletinboard_db
+DB_USER=bulletinboard_user
+DB_PASSWORD=your_secure_password  # Change this!
+SECRET_KEY=your_django_secret_key  # Change this!
+DEBUG=1  # Set to 0 for production
 
-# Database Settings DB_NAME=bulletinboard_db DB_USER=bulletinboard_user DB_PASSWORD=your_secure_password # Change this! # Django Settings SECRET_KEY=your_django_secret_key # Change this! DEBUG=1 # Set to 0 for production
+
 
 4- Build and Run: Use Docker Compose to build the images and start the containers.
 
@@ -78,15 +87,14 @@ docker-compose up --build -d
 docker-compose exec backend python manage.py migrate
 
 6- Access:
-The backend API should be accessible via the frontend (served on http://localhost) or directly if proxied/exposed differently.
+The backend API should be accessible via the frontend (served on http://127.0.0.1:8000/admin/) or directly if proxied/exposed differently
 
 IceBox Features (Future Enhancements)
 
-. Real-time updates for messages/comments (e.g., using WebSockets).
-. User profile pages.
-. Task categorization or tagging.
-. Admin interface improvements.
-. More comprehensive testing suite.
-. Image uploads instead of just URLs for messages.
+1- Admin tools enhancement: Improve admin capabilities with AI to analyze data, manage users, and optimize task distribution.
 
+2- AI-powered task suggestions: Suggest tasks to users based on historical data and behavior using AI algorithms.
 
+3- Database optimization: Implement AI techniques for better database query performance and optimization.
+
+4- Image uploads: Allow image uploads through the backend and use AI for image recognition and categorization.
